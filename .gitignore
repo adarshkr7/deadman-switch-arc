@@ -28,6 +28,13 @@ typechain-types/
 coverage/
 coverage.json
 
+contracts/out/
+
+# Arc Studio pull state and sandbox logs
+.arc-studio/
+console.jsonl
+traces.jsonl
+
 # OS / editor
 .DS_Store
 Thumbs.db
