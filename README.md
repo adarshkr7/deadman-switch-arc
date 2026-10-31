@@ -29,7 +29,7 @@ Built with [Arc Studio](https://studio.arc.io) for [Arc Microgrants: Built with 
 | Network | Contract | Deploy tx |
 | --- | --- | --- |
 | Arc Testnet | [`0x7c371c3403cd5866000678c28bfe1105444078ee`](https://testnet.explorer.arc.io/address/0x7c371c3403cd5866000678c28bfe1105444078ee) | [`0x0f8fd4df…3e18`](https://testnet.explorer.arc.io/tx/0x0f8fd4dfc8c242394c4b2d02b9d78b1cfce7e2454e414f2fa10c166678da3e18) |
-| Arc Mainnet | _TODO_ | _TODO_ |
+| Arc Mainnet | [`0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE`](https://explorer.arc.io/address/0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE) | [`0x6ef6dc73…6ee`](https://explorer.arc.io/tx/0x6ef6dc736bf5d63e65a08d8d8f5be447f6437014dac83e5c1e98e65fb19e06ee) |
 
 Earlier testnet versions are listed in `AGENTS.md`; the first version's source and tests are in `archive/v1/`.
 
@@ -70,7 +70,7 @@ bun run check             # lint and typecheck
 | --- | --- |
 | Arc Studio project | https://studio.arc.io/app/9f05c1c7-b735-4f47-8c7b-b703912cbbe2 |
 | Live app | https://deadman-switch-arc.vercel.app |
-| Contract address(es) | _TODO: mainnet address, linked on explorer.arc.io_ |
+| Contract address(es) | [`0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE`](https://explorer.arc.io/address/0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE) (Arc mainnet) |
 | Example USDC tx | _TODO: mainnet tx, linked on explorer.arc.io_ |
 | Video walkthrough | _TODO_ |
 | Builder profile | _TODO: GitHub, X, or Farcaster_ |
@@ -79,8 +79,8 @@ Checklist (requirements from the hackathon page):
 
 - [x] Built in Arc Studio from first contract to working app
 - [x] Contracts written and tested in Arc Studio
-- [ ] Contracts deployed to **Arc mainnet** (testnet-only isn't eligible)
-- [ ] Working app live at a public link
+- [x] Contracts deployed to **Arc mainnet** (testnet-only isn't eligible)
+- [x] Working app live at a public link
 - [ ] At least one mainnet transaction that moves USDC through the contract and app
 - [ ] Contract address(es) plus one tx hash, linked on explorer.arc.io
 - [ ] **Public** repo (switch before submitting: `gh repo edit --visibility public --accept-visibility-change-consequences`)
