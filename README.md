@@ -69,7 +69,7 @@ bun run check             # lint and typecheck
 | Item | Value |
 | --- | --- |
 | Arc Studio project | https://studio.arc.io/app/9f05c1c7-b735-4f47-8c7b-b703912cbbe2 |
-| Live app | _TODO_ |
+| Live app | https://deadman-switch-arc.vercel.app |
 | Contract address(es) | _TODO: mainnet address, linked on explorer.arc.io_ |
 | Example USDC tx | _TODO: mainnet tx, linked on explorer.arc.io_ |
 | Video walkthrough | _TODO_ |
