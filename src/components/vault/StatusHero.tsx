@@ -32,6 +32,14 @@ interface Primary {
   danger?: boolean
 }
 
+/** Mirrors the contract's _claimAmount: the last claimant takes the remainder, everyone else pool * share. */
+function expectedClaim(vault: VaultCtx['vault'], index: number): bigint {
+  if (index < 0) return 0n
+  const pool = vault.finalized ? vault.claimPool : vault.balance
+  if (vault.claimedCount + 1 === vault.beneficiaries.length) return pool - vault.totalClaimed
+  return (pool * BigInt(vault.sharesBps[index] ?? 0)) / 10_000n
+}
+
 const ICONS = { alive: HeartPulse, trigger: Zap, claim: HandCoins, sweep: PackageOpen, lock: Lock, guard: Hourglass }
 
 /** One state, one live countdown, one primary action for the connected role. */
@@ -80,7 +88,9 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
     }
     // triggered, claims open
     if (roles.beneficiary && !iClaimed) {
-      const amount = claimable ?? 0n
+      // claimable() reads 0 until the chain's clock passes challengeEnd, and the cached read can lag
+      // the browser clock that opened this button. Fall back to the contract's own share formula.
+      const amount = claimable && claimable > 0n ? claimable : expectedClaim(vault, myIndex)
       return {
         label: `Claim ${formatUsdc(amount)} USDC`,
         icon: 'claim',
