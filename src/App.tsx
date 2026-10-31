@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { ConnectKitButton } from 'connectkit'
-import { ExternalLink, Moon, Skull, Sun } from 'lucide-react'
+import { BookOpen, ExternalLink, Moon, Skull, Sun } from 'lucide-react'
 import { buildAddressExplorerUrl } from '@/onchain-facts'
 import { CHAIN_ID, CHAIN_NAME, VAULT_ADDRESS } from '@/lib/vault'
 import { PrefsProvider, usePrefs } from '@/hooks/usePrefs'
@@ -20,7 +20,6 @@ type Home = 'create' | 'mine' | 'docs'
 const HOME_TABS: { id: Home; label: string }[] = [
   { id: 'create', label: 'Create' },
   { id: 'mine', label: 'My vaults' },
-  { id: 'docs', label: 'Docs' },
 ]
 const VAULT_TABS: VaultTab[] = ['overview', 'guardians', 'delegate', 'details']
 
@@ -79,6 +78,21 @@ function Shell() {
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <nav aria-label="Site">
+            <button
+              onClick={() => {
+                setVaultId(undefined)
+                setHome('docs')
+                window.scrollTo({ top: 0 })
+              }}
+              aria-current={home === 'docs' && vaultId === undefined ? 'page' : undefined}
+              className="glass-card flex min-h-11 items-center gap-2 rounded-full px-4 text-xs font-semibold transition-transform hover:scale-105"
+              style={home === 'docs' && vaultId === undefined ? { background: 'var(--accent)', color: 'var(--on-accent)' } : undefined}
+            >
+              <BookOpen className="size-4" aria-hidden />
+              Docs
+            </button>
+          </nav>
           <label
             className="glass-card hidden min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-xs font-semibold sm:flex"
             title={demo ? 'New vaults use 60-second-scale windows' : 'New vaults use real-world windows'}
