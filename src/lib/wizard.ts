@@ -62,8 +62,27 @@ export const DEMO_PRESETS: IntervalPreset[] = [
   { id: 'd15', label: '15 minutes', seconds: 900, hint: 'Longer demo' },
 ]
 
-/** Demo vaults use the contract's 60-second minimum for every window (sweep gets 2 minutes). */
-export const DEMO_WINDOWS = { withdrawDelay: 60, challengeWindow: 60, rotationTimelock: 60, sweepPeriod: 120 } as const
+/**
+ * Demo vaults use the contract's 60-second minimum for most windows. The sweep gets 10 minutes so
+ * every beneficiary has a fair chance to claim before unclaimed shares go to the fallback.
+ */
+export const DEMO_WINDOWS = { withdrawDelay: 60, challengeWindow: 60, rotationTimelock: 60, sweepPeriod: 600 } as const
+
+/**
+ * Non-blocking warning when the fallback is also a guardian or beneficiary. The contract allows it,
+ * but it quietly makes that person a back-up recipient of everyone else's unclaimed shares.
+ */
+export function fallbackWarning(fallback: string, guardians: string[], beneficiaries: string[]): string | undefined {
+  const fb = fallback.trim().toLowerCase()
+  if (!fb) return undefined
+  if (guardians.some((g) => g.trim().toLowerCase() === fb)) {
+    return 'This fallback is also a guardian. Guardians cannot move funds, but this one would receive every share left unclaimed after the sweep period.'
+  }
+  if (beneficiaries.some((b) => b.trim().toLowerCase() === fb)) {
+    return "This fallback is also a beneficiary. They would receive the other beneficiaries' shares if those go unclaimed after the sweep period."
+  }
+  return undefined
+}
 
 let rowId = 100
 export const nextRowId = () => rowId++
@@ -190,7 +209,9 @@ export function summarize(p: CreateParams): string[] {
     p.guardians.length > 0
       ? `${p.guardianThreshold} of ${p.guardians.length} guardians must agree to extend a deadline once, cancel a withdrawal or propose a new owner. Guardians can never move funds, and a new owner needs your or your delegate's approval after a ${secs(p.rotationTimelock, DEFAULTS.rotationTimelock)} timelock.`
       : 'No guardians: nobody can extend the deadline or propose a new owner.',
-    `Funds nobody claims within ${secs(p.sweepPeriod, DEFAULTS.sweepPeriod)} of claims opening can be swept to ${shortAddress(p.fallbackAddress)}.`,
+    `Each beneficiary claims only their own share. Shares still unclaimed ${secs(p.sweepPeriod, DEFAULTS.sweepPeriod)} after claims open go to the fallback address ${shortAddress(p.fallbackAddress)}, never to whoever sends the sweep.`,
   ]
+  const warning = fallbackWarning(p.fallbackAddress, p.guardians, p.beneficiaries)
+  if (warning) lines.push(warning)
   return lines
 }

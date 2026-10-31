@@ -83,7 +83,7 @@ export function DetailsPanel({ ctx, events, loadingEvents }: { ctx: VaultCtx; ev
           ? 'Another transaction is in progress.'
           : undefined
   const sweepRemaining = vault.triggered && now !== undefined ? vault.sweepAt - now : undefined
-  const sweepReason = !vault.triggered ? 'Only available after a trigger.' : vault.swept ? 'Already swept.' : sweepRemaining !== undefined && sweepRemaining > 0 ? 'The sweep period has not finished yet.' : txBusy && !busy ? 'Another transaction is in progress.' : undefined
+  const sweepReason = !vault.triggered ? 'Only available after a trigger.' : vault.swept ? 'Already swept.' : sweepRemaining !== undefined && sweepRemaining > 0 ? 'The sweep period has not finished yet.' : !roles.fallback ? "Only the vault's fallback address collects unclaimed funds." : txBusy && !busy ? 'Another transaction is in progress.' : undefined
 
   return (
     <div className="flex flex-col gap-4">
@@ -110,14 +110,14 @@ export function DetailsPanel({ ctx, events, loadingEvents }: { ctx: VaultCtx; ev
         <Card>
           <SectionLabel>After the trigger</SectionLabel>
           <p className="mt-3 text-sm text-pretty" style={{ color: 'var(--muted)' }}>
-            {vault.swept ? 'Unclaimed funds were swept.' : <>Unclaimed funds can be swept in <InlineCountdown remaining={sweepRemaining} />. Beneficiaries can keep claiming until then.</>}
+            {vault.swept ? 'Unclaimed funds were swept to the fallback address.' : <>Beneficiaries can claim until the sweep. Shares still unclaimed in <InlineCountdown remaining={sweepRemaining} /> go to the fallback address {shortAddress(fallbackPayout ?? c.fallbackAddress)}, never to whoever sweeps.</>}
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <ActionButton variant="ghost" reason={lockReason} busy={busy === 'lock'} onClick={() => { setBusy('lock'); void actions.finalize(vault).finally(() => setBusy(undefined)) }}>
               Lock payout pool
             </ActionButton>
             <ActionButton variant="ghost" reason={sweepReason} busy={busy === 'sweep'} onClick={() => { setBusy('sweep'); void actions.sweep(vault).finally(() => setBusy(undefined)) }}>
-              Sweep unclaimed funds
+              Collect unclaimed funds
             </ActionButton>
           </div>
           {roles.fallback && !vault.swept && (

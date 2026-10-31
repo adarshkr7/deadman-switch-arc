@@ -1,12 +1,17 @@
 import { Plus, Trash2 } from 'lucide-react'
 import { LIMITS } from '@/lib/vault'
-import { nextRowId } from '@/lib/wizard'
+import { fallbackWarning, nextRowId } from '@/lib/wizard'
 import { Button, Notice, TextField } from '@/components/ui'
 import type { StepProps } from '@/components/wizard/types'
 
 export function StepGuardians({ state, update, errors }: StepProps) {
   const guardians = state.guardians
   const n = guardians.length
+  const fbWarning = fallbackWarning(
+    state.fallback,
+    guardians.map((g) => g.address),
+    state.beneficiaries.map((b) => b.address),
+  )
 
   return (
     <div className="flex flex-col gap-5">
@@ -77,7 +82,7 @@ export function StepGuardians({ state, update, errors }: StepProps) {
       <div>
         <TextField
           label="Fallback address for unclaimed funds"
-          hint="If beneficiaries never claim, anyone can sweep what is left to this address after the sweep period. It is fixed at creation."
+          hint="Receives only the shares beneficiaries leave unclaimed after the sweep period. It is fixed at creation; nobody else can redirect it."
           value={state.fallback}
           onChange={(e) => update({ fallback: e.target.value })}
           placeholder="0x…"
@@ -86,6 +91,7 @@ export function StepGuardians({ state, update, errors }: StepProps) {
         />
       </div>
       {errors.guardians[0] && <Notice tone="warn">{errors.guardians[0]}</Notice>}
+      {!errors.guardians[0] && fbWarning && <Notice tone="warn">{fbWarning}</Notice>}
     </div>
   )
 }

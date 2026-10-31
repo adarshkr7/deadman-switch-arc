@@ -86,9 +86,11 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
         run: () => actions.claim(vault, amount, myPayout ?? address ?? vault.owner),
       }
     }
-    if (sweepReady) return { label: 'Sweep unclaimed funds', icon: 'sweep', run: () => actions.sweep(vault), danger: true }
-    if (roles.beneficiary && iClaimed) return { label: 'Claimed', icon: 'lock', reason: 'You already claimed your share.' }
-    return { label: 'Nothing to do', icon: 'lock', reason: 'Beneficiaries can claim now. Unclaimed funds can be swept after the sweep period.' }
+    // Sweeping sends other beneficiaries' unclaimed shares to the fallback, so it is only ever the
+    // fallback's main action. The contract still lets anyone call it; that lives in the Details tab.
+    if (sweepReady && roles.fallback) return { label: 'Collect unclaimed funds', icon: 'sweep', run: () => actions.sweep(vault), danger: true }
+    if (roles.beneficiary && iClaimed) return { label: 'Claimed', icon: 'lock', reason: 'You already claimed your share. Other beneficiaries claim their own shares.' }
+    return { label: 'Nothing to do', icon: 'lock', reason: "Each beneficiary claims their own share. Shares nobody claims in time go to the fallback address the owner chose." }
   }
 
   const primary = choose()
