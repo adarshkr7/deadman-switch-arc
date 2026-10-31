@@ -13,6 +13,7 @@ import { StepShares } from '@/components/wizard/StepShares'
 import { StepInterval } from '@/components/wizard/StepInterval'
 import { StepGuardians } from '@/components/wizard/StepGuardians'
 import { StepReview } from '@/components/wizard/StepReview'
+import { GrainArt } from '@/components/GrainArt'
 
 const STEPS = ['Beneficiaries', 'Shares', 'Interval', 'Guardians', 'Review', 'Deploy'] as const
 const DEPLOY = 5
@@ -56,8 +57,10 @@ export function CreateWizard({ onCreated }: { onCreated: (vaultId: bigint) => vo
 
   return (
     <div className="flex flex-col gap-4">
-      <Card>
-        <h2 className="display text-3xl font-bold text-balance">Create a vault</h2>
+      <header className="glass-card relative isolate flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[36px] p-6 sm:p-8">
+        <GrainArt variant="wave" state="active" className="-z-20" />
+        <div className="grain-shade absolute inset-0 -z-10" aria-hidden />
+        <h2 className="display text-3xl font-bold text-white text-balance sm:text-4xl">Create a vault</h2>
         <ol className="mt-4 flex items-center gap-1" aria-label="Progress">
           {STEPS.map((label, i) => {
             const done = i < step
@@ -69,22 +72,22 @@ export function CreateWizard({ onCreated }: { onCreated: (vaultId: bigint) => vo
                   style={
                     done || current
                       ? { background: 'var(--accent)', color: 'var(--on-accent)' }
-                      : { background: 'var(--neutral-bg)', color: 'var(--subtle)' }
+                      : { background: 'rgba(0, 0, 0, 0.45)', color: 'rgba(255, 255, 255, 0.75)' }
                   }
                 >
                   {done ? <Check className="size-3.5" aria-hidden /> : i + 1}
                 </span>
-                <span className="hidden truncate text-[10px] font-semibold sm:block" style={{ color: current ? 'var(--ink)' : 'var(--subtle)' }}>
+                <span className="hidden truncate text-[10px] font-semibold sm:block" style={{ color: current ? '#ffffff' : 'rgba(255, 255, 255, 0.7)' }}>
                   {label}
                 </span>
               </li>
             )
           })}
         </ol>
-        <p className="mt-3 text-center text-sm font-semibold sm:hidden">
+        <p className="mt-3 text-center text-sm font-semibold text-white sm:hidden">
           Step {step + 1} of {STEPS.length}: {STEPS[step]}
         </p>
-      </Card>
+      </header>
 
       <Card>
         {step === 0 && <StepBeneficiaries {...stepProps} />}
