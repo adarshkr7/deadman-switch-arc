@@ -73,7 +73,7 @@ bun run check             # lint and typecheck
 | Contract address(es) | [`0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE`](https://explorer.arc.io/address/0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE) (Arc mainnet) |
 | Example USDC tx (deposit 0.1 USDC into vault #1) | [`0x4a0e26014b5268d76f3314f9b226395fce89cff76a74d05458236b0af2d6ab0b`](https://explorer.arc.io/tx/0x4a0e26014b5268d76f3314f9b226395fce89cff76a74d05458236b0af2d6ab0b) |
 | Example USDC tx (beneficiary claims 0.1 USDC from vault #1) | [`0x4c2105f9573537826c95c6694810033c5944fa61242aa169293414b1473b8e0f`](https://explorer.arc.io/tx/0x4c2105f9573537826c95c6694810033c5944fa61242aa169293414b1473b8e0f) |
-| Video walkthrough | _TODO_ |
+| Video walkthrough | https://youtu.be/KU6erjHD8BA |
 | Builder profile | _TODO: GitHub, X, or Farcaster_ |
 
 Checklist (requirements from the hackathon page):
@@ -85,7 +85,7 @@ Checklist (requirements from the hackathon page):
 - [x] At least one mainnet transaction that moves USDC through the contract and app
 - [x] Contract address(es) plus one tx hash, linked on explorer.arc.io
 - [ ] **Public** repo (switch before submitting: `gh repo edit --visibility public --accept-visibility-change-consequences`)
-- [ ] Video walkthrough showing the build in Arc Studio and the mainnet transaction
+- [x] Video walkthrough showing the build in Arc Studio and the mainnet transaction
 - [ ] Short description of the project and how Arc Studio was used
 - [ ] Public builder profile on GitHub, X, or Farcaster
 
