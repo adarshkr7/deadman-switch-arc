@@ -71,7 +71,8 @@ bun run check             # lint and typecheck
 | Arc Studio project | https://studio.arc.io/app/9f05c1c7-b735-4f47-8c7b-b703912cbbe2 |
 | Live app | https://deadman-switch-arc.vercel.app |
 | Contract address(es) | [`0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE`](https://explorer.arc.io/address/0xb14d5F1Ea45808bB2f4aD474D9fD39069d36EBcE) (Arc mainnet) |
-| Example USDC tx | _TODO: mainnet tx, linked on explorer.arc.io_ |
+| Example USDC tx (deposit 0.1 USDC into vault #1) | [`0x4a0e26014b5268d76f3314f9b226395fce89cff76a74d05458236b0af2d6ab0b`](https://explorer.arc.io/tx/0x4a0e26014b5268d76f3314f9b226395fce89cff76a74d05458236b0af2d6ab0b) |
+| Example USDC tx (beneficiary claims 0.1 USDC from vault #1) | [`0x4c2105f9573537826c95c6694810033c5944fa61242aa169293414b1473b8e0f`](https://explorer.arc.io/tx/0x4c2105f9573537826c95c6694810033c5944fa61242aa169293414b1473b8e0f) |
 | Video walkthrough | _TODO_ |
 | Builder profile | _TODO: GitHub, X, or Farcaster_ |
 
@@ -81,8 +82,8 @@ Checklist (requirements from the hackathon page):
 - [x] Contracts written and tested in Arc Studio
 - [x] Contracts deployed to **Arc mainnet** (testnet-only isn't eligible)
 - [x] Working app live at a public link
-- [ ] At least one mainnet transaction that moves USDC through the contract and app
-- [ ] Contract address(es) plus one tx hash, linked on explorer.arc.io
+- [x] At least one mainnet transaction that moves USDC through the contract and app
+- [x] Contract address(es) plus one tx hash, linked on explorer.arc.io
 - [ ] **Public** repo (switch before submitting: `gh repo edit --visibility public --accept-visibility-change-consequences`)
 - [ ] Video walkthrough showing the build in Arc Studio and the mainnet transaction
 - [ ] Short description of the project and how Arc Studio was used
