@@ -57,7 +57,7 @@ export function CreateWizard({ onCreated }: { onCreated: (vaultId: bigint) => vo
 
   return (
     <div className="flex flex-col gap-4">
-      <header className="glass-card relative isolate flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[36px] p-6 sm:p-8">
+      <header className="glass-card on-art relative isolate flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[36px] p-6 sm:p-8">
         <GrainArt variant="wave" state="active" className="-z-20" />
         <div className="grain-shade absolute inset-0 -z-10" aria-hidden />
         <h2 className="display text-3xl font-bold text-white text-balance sm:text-4xl">Create a vault</h2>

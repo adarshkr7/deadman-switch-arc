@@ -39,7 +39,7 @@ export function Gauge({ value, display, label, color = 'var(--accent)' }: GaugeP
         {ticks.map((t) => {
           const a = point(t, R - 8)
           const b = point(t, R + 9)
-          return <line key={t} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="rgba(255,255,255,0.55)" strokeWidth={2} strokeLinecap="round" />
+          return <line key={t} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="var(--subtle)" strokeWidth={2} strokeLinecap="round" />
         })}
       </svg>
       <div className="absolute inset-x-0 bottom-0 flex flex-col items-center">

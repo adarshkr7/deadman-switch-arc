@@ -131,7 +131,7 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
       disabled={!needsWallet && blocked}
       aria-label={needsWallet ? 'Connect wallet' : primary.label}
       className={`flex size-14 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 ${urgent && !blocked ? 'alert-pulse' : ''}`}
-      style={{ background: primary.danger ? 'var(--danger)' : '#f4f1ea', color: primary.danger ? '#fff' : '#141416' }}
+      style={{ background: primary.danger ? 'var(--danger)' : 'var(--ink)', color: primary.danger ? '#fff' : 'var(--card)' }}
     >
       {busy ? <Loader2 className="size-6 animate-spin" aria-hidden /> : <Icon className="size-6" aria-hidden />}
     </button>
@@ -141,7 +141,7 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
     <section className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)]" aria-label="Vault status">
       {/* Large art card: the one state, big. */}
       <div
-        className={`glass-card relative isolate flex min-h-[300px] flex-col justify-between overflow-hidden rounded-[36px] p-6 sm:row-span-2 sm:min-h-[380px] ${urgent ? 'alert-pulse' : ''}`}
+        className={`glass-card on-art relative isolate flex min-h-[300px] flex-col justify-between overflow-hidden rounded-[36px] p-6 sm:row-span-2 sm:min-h-[380px] ${urgent ? 'alert-pulse' : ''}`}
       >
         <GrainArt variant="wave" state={state} className="-z-20" />
         <div className="grain-shade absolute inset-0 -z-10" aria-hidden />
@@ -196,7 +196,7 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
               type="button"
               onClick={() => goTab('details')}
               aria-label="Vault details"
-              className="flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors hover:bg-white/10"
+              className="flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors hover:bg-[var(--neutral-bg)]"
               style={{ borderColor: 'var(--border-strong)' }}
             >
               <Info className="size-4" aria-hidden />
@@ -213,7 +213,7 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
             type="button"
             onClick={() => goTab('details')}
             aria-label="More"
-            className="absolute right-3 top-2 rounded-full p-1.5 transition-colors hover:bg-white/10"
+            className="absolute right-3 top-2 rounded-full p-1.5 transition-colors hover:bg-[var(--neutral-bg)]"
           >
             <MoreHorizontal className="size-5" aria-hidden />
           </button>

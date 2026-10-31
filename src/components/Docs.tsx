@@ -95,7 +95,7 @@ const B = ({ children }: { children: ReactNode }) => <strong style={{ color: 'va
 export function Docs() {
   return (
     <div className="flex flex-col gap-5">
-      <header className="glass-card relative isolate flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[36px] p-6 sm:p-8">
+      <header className="glass-card on-art relative isolate flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[36px] p-6 sm:p-8">
         <GrainArt variant="wave" state="active" className="-z-20" />
         <div className="grain-shade absolute inset-0 -z-10" aria-hidden />
         <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Documentation</p>

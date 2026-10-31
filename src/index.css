@@ -3,64 +3,46 @@
 @tailwind utilities;
 
 /*
- * Bento look: charcoal cards on a soft grey page, warm orange accents and grainy gradient art.
- * Page-level tokens live on :root; every card re-scopes the same tokens for its dark surface,
- * so components keep using var(--ink), var(--muted)… without knowing where they sit.
+ * Bento look. Light mode: warm white cards on a soft grey page. Dark mode: charcoal cards on black,
+ * as in the reference. Orange accents and the grainy gradient art are shared by both.
  */
 :root {
   color-scheme: light;
-  --bg: #c4c4c6;
-  --bg-gradient: linear-gradient(180deg, #cdcdcf 0%, #c1c1c4 60%, #b8b8bb 100%);
-  --ink: #141416;
-  --ink-2: #2a2a2e;
-  --muted: #45454b;
-  --subtle: #5d5d64;
-  --border: rgba(0, 0, 0, 0.12);
-  --border-strong: rgba(0, 0, 0, 0.3);
-  --surface: rgba(255, 255, 255, 0.35);
-  --surface-strong: rgba(255, 255, 255, 0.5);
-  --surface-solid: #ffffff;
-  --surface-muted: rgba(0, 0, 0, 0.05);
-  --neutral-bg: rgba(0, 0, 0, 0.08);
-  --track: rgba(0, 0, 0, 0.1);
+  --bg: #e4e3e0;
+  --bg-gradient: linear-gradient(180deg, #ebeae7 0%, #e1e0dc 60%, #d9d8d4 100%);
+  --card: #fbfaf8;
+  --card-shadow: 0 18px 40px -18px rgba(40, 30, 20, 0.28), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  --ink: #17161a;
+  --ink-2: #2e2c33;
+  --muted: #5f5c66;
+  --subtle: #7d7a84;
+  --border: rgba(23, 22, 26, 0.1);
+  --border-strong: rgba(23, 22, 26, 0.25);
+  --surface: rgba(23, 22, 26, 0.03);
+  --surface-strong: #f0efeb;
+  --surface-solid: #e8e6e1;
+  --surface-muted: #f3f2ee;
+  --neutral-bg: rgba(23, 22, 26, 0.07);
+  --track: rgba(23, 22, 26, 0.1);
 
-  --accent: #f2a43a;
-  --accent-hover: #ffb955;
+  --accent: #f08c1f;
+  --accent-hover: #d9740a;
   --on-accent: #1b1206;
-  --focus: #ffb955;
-  --success: #f2a43a;
-  --success-bg: rgba(242, 164, 58, 0.16);
-  --danger: #ff5b3a;
-  --danger-bg: rgba(255, 91, 58, 0.16);
-  --warn: #ffd06a;
-  --warn-bg: rgba(255, 208, 106, 0.16);
-
-  --card: #1c1c1e;
-  --card-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.35);
+  --focus: #f08c1f;
+  --success: #c46a0a;
+  --success-bg: rgba(240, 140, 31, 0.14);
+  --danger: #d9381a;
+  --danger-bg: rgba(217, 56, 26, 0.12);
+  --warn: #9a6400;
+  --warn-bg: rgba(240, 175, 31, 0.18);
 }
 
 html[data-theme='dark'] {
   color-scheme: dark;
   --bg: #0b0b0c;
   --bg-gradient: linear-gradient(180deg, #0f0f10 0%, #0b0b0c 100%);
-  --ink: #f4f1ea;
-  --ink-2: #e2ded6;
-  --muted: #a6a39c;
-  --subtle: #85827c;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.22);
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-strong: #29292c;
-  --surface-solid: #313135;
-  --surface-muted: #232326;
-  --neutral-bg: rgba(255, 255, 255, 0.07);
-  --track: rgba(255, 255, 255, 0.12);
-  --card: #19191b;
+  --card: #1c1c1e;
   --card-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.8);
-}
-
-/* Card surfaces are always dark, in both themes. */
-.glass-card {
   --ink: #f4f1ea;
   --ink-2: #e2ded6;
   --muted: #a6a39c;
@@ -73,9 +55,38 @@ html[data-theme='dark'] {
   --surface-muted: #232326;
   --neutral-bg: rgba(255, 255, 255, 0.07);
   --track: rgba(255, 255, 255, 0.14);
+
+  --accent: #f2a43a;
+  --accent-hover: #ffb955;
+  --on-accent: #1b1206;
+  --focus: #ffb955;
+  --success: #f2a43a;
+  --success-bg: rgba(242, 164, 58, 0.16);
+  --danger: #ff5b3a;
+  --danger-bg: rgba(255, 91, 58, 0.16);
+  --warn: #ffd06a;
+  --warn-bg: rgba(255, 208, 106, 0.16);
+}
+
+.glass-card {
   color: var(--ink);
   background: var(--card);
   box-shadow: var(--card-shadow);
+}
+
+/* Content laid over the (always dark) artwork uses the dark palette in both themes. */
+.on-art {
+  --ink: #f4f1ea;
+  --ink-2: #e2ded6;
+  --muted: #d6d2ca;
+  --subtle: #b5b1a9;
+  --success: #f2a43a;
+  --success-bg: rgba(0, 0, 0, 0.45);
+  --danger: #ff6b4a;
+  --danger-bg: rgba(0, 0, 0, 0.45);
+  --warn: #ffd06a;
+  --warn-bg: rgba(0, 0, 0, 0.45);
+  --neutral-bg: rgba(0, 0, 0, 0.45);
 }
 
 * {
