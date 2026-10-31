@@ -93,7 +93,11 @@ export function VaultPage({ vaultId, tab, onTab, onBack }: VaultPageProps) {
         {back}
         <div className="flex items-center gap-2">
           <h1 className="display text-lg font-bold">Vault #{vault.id.toString()}</h1>
-          {isDemoVault(vault) && <StatusChip tone="warn">Demo vault</StatusChip>}
+          {isDemoVault(vault) && (
+            <span className="glass-card rounded-full">
+              <StatusChip tone="warn">Demo vault</StatusChip>
+            </span>
+          )}
         </div>
       </div>
 

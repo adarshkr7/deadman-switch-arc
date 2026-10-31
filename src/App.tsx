@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { ConnectKitButton } from 'connectkit'
-import { ExternalLink, Moon, ShieldCheck, Sun } from 'lucide-react'
+import { ExternalLink, Moon, Skull, Sun } from 'lucide-react'
 import { buildAddressExplorerUrl } from '@/onchain-facts'
 import { CHAIN_ID, CHAIN_NAME, VAULT_ADDRESS } from '@/lib/vault'
 import { PrefsProvider, usePrefs } from '@/hooks/usePrefs'
@@ -63,11 +63,11 @@ function Shell() {
   const wrongChain = isConnected && chainId !== CHAIN_ID
 
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-xl px-4 pb-24 pt-5">
+    <div className="mx-auto min-h-dvh w-full max-w-4xl px-4 pb-24 pt-5">
       <header className="mb-4 flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-xl" style={{ background: 'var(--accent)', color: 'var(--on-accent)' }}>
-            <ShieldCheck className="size-5" aria-hidden />
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-xl" style={{ background: '#1c1c1e', color: 'var(--accent)' }}>
+            <Skull className="size-5" aria-hidden />
           </div>
           <div className="min-w-0 leading-tight">
             <div className="display truncate text-lg font-bold">Dead-Man's Switch</div>
