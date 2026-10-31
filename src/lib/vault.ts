@@ -8,14 +8,14 @@ import {
   parseAbi,
 } from 'viem'
 import type { Address } from 'viem'
-import { arcTestnet } from 'viem/chains'
 import { getUsdc, requireChain } from '@/onchain-facts'
 import { vaultAbi } from '@/lib/vaultAbi'
 
 export { vaultAbi }
 
-/** Single place to change when the vault moves to Arc mainnet. */
-export const VAULT_CHAIN = arcTestnet
+import { VAULT_CHAIN } from '@/lib/chain'
+
+export { VAULT_CHAIN }
 export const CHAIN_ID = VAULT_CHAIN.id
 export const CHAIN_NAME = requireChain(CHAIN_ID).name
 
