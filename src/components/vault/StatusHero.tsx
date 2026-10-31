@@ -12,6 +12,7 @@ import { StatusChip } from '@/components/ui'
 import type { Tone } from '@/components/ui'
 import { InlineCountdown } from '@/components/Countdown'
 import { Gauge } from '@/components/Gauge'
+import { GrainArt } from '@/components/GrainArt'
 import type { VaultCtx } from '@/components/vault/ctx'
 
 const STATE_TONE: Record<UiState, Tone> = { active: 'success', warning: 'danger', challenge: 'warn', triggered: 'neutral', swept: 'neutral' }
@@ -137,12 +138,13 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
   )
 
   return (
-    <section className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)]" aria-label="Vault status">
+    <section className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)]" aria-label="Vault status">
       {/* Large art card: the one state, big. */}
       <div
-        className={`glass-card grain-art grain-wave art-${state} relative flex min-h-[260px] flex-col justify-between rounded-[28px] p-5 sm:row-span-2 sm:min-h-[360px] ${urgent ? 'alert-pulse' : ''}`}
+        className={`glass-card relative isolate flex min-h-[300px] flex-col justify-between overflow-hidden rounded-[36px] p-6 sm:row-span-2 sm:min-h-[380px] ${urgent ? 'alert-pulse' : ''}`}
       >
-        <div className="grain-shade absolute inset-0 -z-[1]" aria-hidden />
+        <GrainArt variant="wave" state={state} className="-z-20" />
+        <div className="grain-shade absolute inset-0 -z-10" aria-hidden />
         <div className="flex flex-wrap items-center justify-between gap-2">
           <StatusChip tone={STATE_TONE[state]}>{STATE_LABEL[state]}</StatusChip>
           <span className="rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white/85 backdrop-blur">
@@ -156,8 +158,10 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
       </div>
 
       {/* Wide card: art thumbnail, the balance and what it means. */}
-      <div className="glass-card grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 rounded-[28px] p-3 sm:gap-6">
-        <div className={`grain-art grain-swirl art-${state} size-28 rounded-[22px] sm:size-40`} aria-hidden />
+      <div className="glass-card grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 rounded-[36px] p-3.5 sm:gap-6">
+        <div className="relative size-28 shrink-0 overflow-hidden rounded-[26px] sm:size-40" aria-hidden>
+          <GrainArt variant="swirl" state={state} />
+        </div>
         <div className="min-w-0 py-2 pr-2">
           <div className="flex items-center gap-2">
             <TokenUSDC variant="branded" size={24} className="shrink-0" />
@@ -172,9 +176,9 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+      <div className="grid gap-4 sm:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         {/* Progress card: the one action as a round button, and the live countdown. */}
-        <div className="glass-card flex flex-col justify-center rounded-[28px] px-4 py-5">
+        <div className="glass-card flex flex-col justify-center rounded-[32px] px-5 py-5">
           <div className="flex items-center gap-3">
             {needsWallet ? <ConnectKitButton.Custom>{({ show }) => roundButton(() => show?.())}</ConnectKitButton.Custom> : roundButton(run)}
             <div className="min-w-0 flex-1">
@@ -204,7 +208,7 @@ export function StatusHero({ ctx }: { ctx: VaultCtx }) {
         </div>
 
         {/* Gauge card: how much of the current window is left. */}
-        <div className="glass-card relative flex flex-col justify-end rounded-[28px] px-4 pb-4 pt-6">
+        <div className="glass-card relative flex flex-col justify-end rounded-[32px] px-4 pb-4 pt-6">
           <button
             type="button"
             onClick={() => goTab('details')}

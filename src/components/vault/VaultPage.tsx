@@ -88,7 +88,7 @@ export function VaultPage({ vaultId, tab, onTab, onBack }: VaultPageProps) {
   const ctx: VaultCtx = { vault, now, derived, roles, address, proposals, txBusy, goTab: onTab }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         {back}
         <div className="flex items-center gap-2">
@@ -104,13 +104,13 @@ export function VaultPage({ vaultId, tab, onTab, onBack }: VaultPageProps) {
       <RotationAlert ctx={ctx} />
       <StatusHero ctx={ctx} />
 
-      <nav className="glass-card flex rounded-2xl p-1" aria-label="Vault sections">
+      <nav className="glass-card flex self-start overflow-x-auto rounded-full p-1" aria-label="Vault sections">
         {TABS.map((t) => (
           <button
             key={t.id}
             onClick={() => onTab(t.id)}
             aria-current={tab === t.id ? 'page' : undefined}
-            className="min-h-11 flex-1 rounded-xl text-xs font-semibold transition-colors sm:text-sm"
+            className="min-h-10 shrink-0 rounded-full px-4 text-xs font-semibold transition-colors sm:px-6 sm:text-sm"
             style={tab === t.id ? { background: 'var(--accent)', color: 'var(--on-accent)' } : { color: 'var(--muted)' }}
           >
             {t.label}
@@ -119,17 +119,21 @@ export function VaultPage({ vaultId, tab, onTab, onBack }: VaultPageProps) {
       </nav>
 
       {tab === 'overview' && (
-        <>
-          <PendingActions ctx={ctx} />
-          <FundsCard ctx={ctx} />
-          <BeneficiaryList ctx={ctx} />
-          <Card>
+        <div className="grid items-start gap-5 lg:grid-cols-2">
+          <div className="flex flex-col gap-5">
+            <FundsCard ctx={ctx} />
+          </div>
+          <div className="flex flex-col gap-5">
+            <PendingActions ctx={ctx} />
+            <BeneficiaryList ctx={ctx} />
+          </div>
+          <Card className="lg:col-span-2">
             <ShareVaultLink vaultId={vault.id} />
             <p className="mt-2 text-center text-xs" style={{ color: 'var(--subtle)' }}>
               Anyone with the link can view this vault. Only connected wallets with a role can act.
             </p>
           </Card>
-        </>
+        </div>
       )}
       {tab === 'guardians' && <GuardiansPanel ctx={ctx} />}
       {tab === 'delegate' && <DelegatePanel ctx={ctx} />}

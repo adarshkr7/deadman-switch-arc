@@ -9,16 +9,18 @@ import { TxLogProvider } from '@/hooks/useTxLog'
 import { ConfirmProvider } from '@/components/Confirm'
 import { CreateWizard } from '@/components/wizard/CreateWizard'
 import { VaultPicker } from '@/components/VaultPicker'
+import { Docs } from '@/components/Docs'
 import { VaultPage } from '@/components/vault/VaultPage'
 import type { VaultTab } from '@/components/vault/VaultPage'
 import { TxLog } from '@/components/TxLog'
 import { Button, Notice } from '@/components/ui'
 
-type Home = 'create' | 'mine'
+type Home = 'create' | 'mine' | 'docs'
 
 const HOME_TABS: { id: Home; label: string }[] = [
   { id: 'create', label: 'Create' },
   { id: 'mine', label: 'My vaults' },
+  { id: 'docs', label: 'Docs' },
 ]
 const VAULT_TABS: VaultTab[] = ['overview', 'guardians', 'delegate', 'details']
 
@@ -27,7 +29,7 @@ function readInitial(): { home: Home; vaultId?: bigint; tab: VaultTab } {
   const id = params.get('vault')
   const tab = params.get('tab')
   return {
-    home: params.get('view') === 'mine' ? 'mine' : 'create',
+    home: params.get('view') === 'mine' ? 'mine' : params.get('view') === 'docs' ? 'docs' : 'create',
     vaultId: id && /^[1-9]\d{0,17}$/.test(id) ? BigInt(id) : undefined,
     tab: VAULT_TABS.find((t) => t === tab) ?? 'overview',
   }
@@ -48,8 +50,8 @@ function Shell() {
     if (vaultId !== undefined) {
       params.set('vault', vaultId.toString())
       if (tab !== 'overview') params.set('tab', tab)
-    } else if (home === 'mine') {
-      params.set('view', 'mine')
+    } else if (home !== 'create') {
+      params.set('view', home)
     }
     const query = params.toString()
     window.history.replaceState(null, '', query ? `/?${query}` : '/')
@@ -64,9 +66,9 @@ function Shell() {
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-4xl px-4 pb-24 pt-5">
-      <header className="mb-4 flex items-center justify-between gap-2">
+      <header className="mb-6 flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-xl" style={{ background: '#1c1c1e', color: 'var(--accent)' }}>
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full" style={{ background: '#1c1c1e', color: 'var(--accent)' }}>
             <Skull className="size-5" aria-hidden />
           </div>
           <div className="min-w-0 leading-tight">
@@ -77,10 +79,17 @@ function Shell() {
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <label
+            className="glass-card hidden min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-xs font-semibold sm:flex"
+            title={demo ? 'New vaults use 60-second-scale windows' : 'New vaults use real-world windows'}
+          >
+            <input type="checkbox" role="switch" aria-label="Demo mode" checked={demo} onChange={(e) => setDemo(e.target.checked)} className="size-4 accent-[var(--accent)]" />
+            Demo mode
+          </label>
           <button
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="glass-inner hover-surface flex size-11 items-center justify-center rounded-xl"
+            className="glass-card flex size-11 items-center justify-center rounded-full transition-transform hover:scale-105"
           >
             {theme === 'dark' ? <Sun className="size-4" aria-hidden /> : <Moon className="size-4" aria-hidden />}
           </button>
@@ -88,21 +97,10 @@ function Shell() {
         </div>
       </header>
 
-      <label className="glass-card mb-4 flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-2xl px-4 py-2">
-        <span className="text-sm">
-          <span className="font-semibold">Demo mode</span>
-          <span className="ml-2 text-xs" style={{ color: 'var(--muted)' }}>
-            {demo ? 'New vaults use 60-second-scale windows' : 'Off: new vaults use real-world windows'}
-          </span>
-        </span>
-        <input
-          type="checkbox"
-          role="switch"
-          aria-label="Demo mode"
-          checked={demo}
-          onChange={(e) => setDemo(e.target.checked)}
-          className="size-5 accent-[var(--accent)]"
-        />
+
+      <label className="glass-card mb-5 flex min-h-11 w-fit cursor-pointer items-center gap-2 rounded-full px-4 text-xs font-semibold sm:hidden">
+        <input type="checkbox" role="switch" aria-label="Demo mode" checked={demo} onChange={(e) => setDemo(e.target.checked)} className="size-4 accent-[var(--accent)]" />
+        Demo mode {demo ? 'on: 60-second windows' : 'off'}
       </label>
 
       {!VAULT_ADDRESS ? (
@@ -121,13 +119,13 @@ function Shell() {
           )}
 
           {vaultId === undefined && (
-            <nav className="glass-card mb-4 flex rounded-2xl p-1" aria-label="Views">
+            <nav className="glass-card mb-5 inline-flex rounded-full p-1" aria-label="Views">
               {HOME_TABS.map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setHome(t.id)}
                   aria-current={home === t.id ? 'page' : undefined}
-                  className="min-h-11 flex-1 rounded-xl text-sm font-semibold transition-colors"
+                  className="min-h-10 rounded-full px-6 text-sm font-semibold transition-colors"
                   style={home === t.id ? { background: 'var(--accent)', color: 'var(--on-accent)' } : { color: 'var(--muted)' }}
                 >
                   {t.label}
@@ -136,11 +134,13 @@ function Shell() {
             </nav>
           )}
 
-          <main className="flex flex-col gap-4">
+          <main className="flex flex-col gap-5">
             {vaultId !== undefined ? (
               <VaultPage vaultId={vaultId} tab={tab} onTab={setTab} onBack={() => setVaultId(undefined)} />
             ) : home === 'create' ? (
               <CreateWizard onCreated={open} />
+            ) : home === 'docs' ? (
+              <Docs />
             ) : (
               <VaultPicker onSelect={open} />
             )}

@@ -2,7 +2,7 @@ import { Loader2 } from 'lucide-react'
 import type { ButtonHTMLAttributes, CSSProperties, InputHTMLAttributes, ReactNode } from 'react'
 
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <section className={`glass-card rounded-3xl p-5 sm:p-6 ${className}`}>{children}</section>
+  return <section className={`glass-card rounded-[32px] p-6 sm:p-7 ${className}`}>{children}</section>
 }
 
 export function SectionLabel({ children }: { children: ReactNode }) {
